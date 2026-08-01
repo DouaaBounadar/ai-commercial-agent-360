@@ -1,7 +1,7 @@
 import os
 import sys
 import pandas as pd
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
 
@@ -53,7 +53,8 @@ def load_catalog():
             pool_pre_ping=True
         )
         with engine.connect() as conn:
-            conn.execute("SELECT 1")
+            # Correction SQLAlchemy 2.0 : Utilisation de text()
+            conn.execute(text("SELECT 1"))
         print("✅ Connexion à la base de données OK\n")
     except Exception as e:
         print(f"❌ Erreur connexion DB: {e}")
